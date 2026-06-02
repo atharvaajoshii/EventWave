@@ -4,7 +4,7 @@ const cors = require("cors");
 const app = express();
 
 const db = require("./config/db");
-
+const authRoutes =  require("./routes/authRoutes");
 const port = process.env.PORT || 3000;
 
 app.use(cors());
@@ -23,8 +23,8 @@ db.getConnection()
     })
 
 
+    app.use("/api", authRoutes);
 
 app.listen(port,()=>{
     console.log(`server running on port ${port}`);
 });
-
