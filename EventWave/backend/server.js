@@ -5,7 +5,7 @@ const app = express();
 
 const db = require("./config/db");
 const authRoutes =  require("./routes/authRoutes");
-const { verifyToken } = require("./middleware/authMiddleware");
+const { verifyToken,isAdmin } = require("./middleware/authMiddleware");
 const port = process.env.PORT || 3000;
 
 app.use(cors());
@@ -30,6 +30,12 @@ app.get("/api/protected",verifyToken,(req,res)=>{
     res.json({
         message:"protected route accessed",
         user:req.user
+    });
+});
+
+app.get("/api/admin-test",verifyToken,isAdmin,(req,res)=>{
+    res.json({
+        message:"welcome admin"
     });
 });
 
