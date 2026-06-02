@@ -7,6 +7,7 @@ const db = require("./config/db");
 const authRoutes =  require("./routes/authRoutes");
 const { verifyToken,isAdmin } = require("./middleware/authMiddleware");
 const eventRoutes = require("./routes/eventRoutes");
+const registrationRoutes = require("./routes/registrationRoutes");
 const port = process.env.PORT || 3000;
 
 app.use(cors());
@@ -40,6 +41,8 @@ app.get("/api/admin-test",verifyToken,isAdmin,(req,res)=>{
         message:"welcome admin"
     });
 });
+
+app.use("/api", registrationRoutes);
 
 app.listen(port,()=>{
     console.log(`server running on port ${port}`);
