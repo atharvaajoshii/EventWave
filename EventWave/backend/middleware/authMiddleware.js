@@ -21,7 +21,7 @@ const verifyToken = (req,res,next) =>{
 };
 const isAdmin = (req,res,next)=>{
     if(req.user.role!=="admin"){
-        res.status(403).json({
+        return res.status(403).json({
             message:"access denied"
         });
     }
