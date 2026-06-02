@@ -6,6 +6,7 @@ const app = express();
 const db = require("./config/db");
 const authRoutes =  require("./routes/authRoutes");
 const { verifyToken,isAdmin } = require("./middleware/authMiddleware");
+const eventRoutes = require("./routes/eventRoutes");
 const port = process.env.PORT || 3000;
 
 app.use(cors());
@@ -25,6 +26,7 @@ db.getConnection()
 
 
 app.use("/api", authRoutes);
+app.use("/api/events", eventRoutes);
 
 app.get("/api/protected",verifyToken,(req,res)=>{
     res.json({
