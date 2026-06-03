@@ -7,8 +7,8 @@ function AdminDashboard() {
   const [eventname, setEventname] = useState("");
   const [date, setDate] = useState("");
   const [venue, setVenue] = useState("");
-  const [capacity, setCapacity] = useState("");
-  const [selectedRegistrations, setSelectedRegistrations] = useState([]);
+  const [capacity, setCapacity] = useState(""); const [expandedEvent, setExpandedEvent] = useState(null);
+  const [registrations, setRegistrations] = useState({});
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -61,32 +61,38 @@ function AdminDashboard() {
   };
 
   const viewRegistrations = async (eventId) => {
-    try {
-      const token = localStorage.getItem("token");
-      const response = await api.get(`/events/${eventId}/registrations`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setSelectedRegistrations(response.data);
+    if (expandedEvent === eventId) {
+      setExpandedEvent(null);
+      return;
+    }
+    try{
+      const token =
+        localStorage.getItem("token");
+      const response = await api.get(
+        `/events/${eventId}/registrations`,
+        {
+          headers: {
+            Authorization:
+              `Bearer ${token}`
+          }
+        }
+      );
+      setRegistrations(prev => ({
+        ...prev,
+        [eventId]: response.data
+      }));
+      setExpandedEvent(eventId);
     } catch (error) {
+
       console.log(error);
-      alert("Failed to load registrations");
     }
   };
 
   // Calculate stats
   const totalEvents = events.length;
-  const totalRegistrations = events.reduce(
-    (sum, event) => sum + event.registrationCount,
-    0
-  );
-  const upcomingEvents = events.filter(
-    (event) => new Date(event.date) > new Date()
-  ).length;
-  const fullEvents = events.filter(
-    (event) => event.registrationCount >= event.capacity
-  ).length;
+  const totalRegistrations = events.reduce((sum, event) => sum + event.registrationCount,0);
+  const upcomingEvents = events.filter((event) => new Date(event.date) > new Date()).length;
+  const fullEvents = events.filter((event) => event.registrationCount >= event.capacity).length;
 
   return (
     <div className="admin-dashboard">
@@ -107,10 +113,6 @@ function AdminDashboard() {
       <div className="admin-content">
         {/* Stats Section */}
         <div className="stats-section">
-          <div className="stat-card">
-            <div className="stat-number">{totalEvents}</div>
-            <div className="stat-label">Total Events</div>
-          </div>
           <div className="stat-card">
             <div className="stat-number">{totalRegistrations}</div>
             <div className="stat-label">Total Registrations</div>
@@ -133,50 +135,21 @@ function AdminDashboard() {
           <form onSubmit={handleCreateEvent} className="event-form">
             <div className="form-field">
               <label>Event Name</label>
-              <input
-                type="text"
-                placeholder="Enter event name"
-                value={eventname}
-                onChange={(e) => setEventname(e.target.value)}
-                required
-              />
+              <input type="text" placeholder="Enter event name" value={eventname} onChange={(e) => setEventname(e.target.value)} required /> 
             </div>
-
             <div className="form-field">
               <label>Date</label>
-              <input
-                type="date"
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
-                required
-              />
+              <input type="date" value={date} onChange={(e) => setDate(e.target.value)} required />
             </div>
-
             <div className="form-field">
               <label>Venue</label>
-              <input
-                type="text"
-                placeholder="Enter venue"
-                value={venue}
-                onChange={(e) => setVenue(e.target.value)}
-                required
-              />
+              <input type="text" placeholder="Enter venue" value={venue} onChange={(e) => setVenue(e.target.value)} required />
             </div>
-
             <div className="form-field">
               <label>Capacity</label>
-              <input
-                type="number"
-                placeholder="Enter capacity"
-                value={capacity}
-                onChange={(e) => setCapacity(e.target.value)}
-                required
-              />
+              <input type="number" placeholder="Enter capacity" value={capacity} onChange={(e) => setCapacity(e.target.value)} required />
             </div>
-
-            <button type="submit" className="submit-button">
-              Create Event
-            </button>
+            <button type="submit" className="submit-button">Create Event</button>
           </form>
         </div>
 
@@ -219,32 +192,39 @@ function AdminDashboard() {
                       </span>
                     </div>
                   </div>
-                  <button
-                    className="view-registrations-button"
-                    onClick={() => viewRegistrations(event.eid)}
-                  >
-                    View Registrations
-                  </button>
+                  <button className="view-registrations-button" onClick={() => viewRegistrations(event.eid)}>View Registrations</button>
+                  {
+                    expandedEvent === event.eid &&
+                    registrations[event.eid] && (
+
+                      <div
+                        style={{
+                          marginTop: "15px",
+                          borderTop: "1px solid #ddd",
+                          paddingTop: "10px"
+                        }}
+                      ><h4>Registered Students</h4>
+                        {
+                          registrations[event.eid]
+                            .length === 0 ? (
+                            <p>No registrations</p>
+                          ) : (
+                            registrations[event.eid]
+                              .map(student => (
+                                <div key={student.uid}>
+                                  <p>{student.name}</p>
+                                </div>
+                              ))
+                          )
+                        }
+                      </div>
+                    )
+                  }
                 </div>
               );
             })}
           </div>
         </div>
-
-        {/* Student Registrations */}
-        {selectedRegistrations.length > 0 && (
-          <div className="registrations-section">
-            <h2 className="section-title">Student Registrations</h2>
-            <div className="registrations-list">
-              {selectedRegistrations.map((student, index) => (
-                <div key={index} className="registration-card">
-                  <div className="registration-name">{student.name}</div>
-                  <div className="registration-username">{student.username}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );

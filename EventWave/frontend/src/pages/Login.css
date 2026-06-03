@@ -16,10 +16,6 @@
     background-position: center;
     background-repeat: no-repeat;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
     padding: 20px;
     background-repeat: no-repeat;
     padding: 20px;
@@ -38,16 +34,7 @@
 
 /* Left Section - Branding */
 .login-left {
-    flex: 1;
-    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--light-blue) 100%);
 
-    color: white;
-    padding: 60px 40px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
     flex: 1;
 
     background-image:
