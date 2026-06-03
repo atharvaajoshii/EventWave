@@ -5,7 +5,13 @@
 EventWave is a College Event Registration Portal that allows administrators to create and manage events while enabling students to register for available events. The platform enforces role-based access control using JWT authentication and prevents overbooking through capacity validation.
 
 ---
+Project Source Code Location:
 
+EventWave/
+├── backend/
+└── frontend/
+
+---
 ## Tech Stack
 
 ### Frontend
