@@ -5,13 +5,29 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+
+    background-image:
+        linear-gradient(rgba(91, 19, 163, 0.65),
+            rgba(185, 193, 229, 0.55)),
+        url('/clouds.png');
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+    background-repeat: no-repeat;
     padding: 20px;
 }
 
 .login-card {
     background: var(--card-bg);
-    border-radius: 16px;
+    border-radius: 25px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
     overflow: hidden;
     max-width: 900px;
@@ -87,7 +103,7 @@
 .form-input {
     padding: 14px 16px;
     border: 2px solid var(--border-color);
-    border-radius: 10px;
+    border-radius: 5px;
     font-size: 15px;
     color: var(--text-primary);
     transition: all 0.3s ease;
