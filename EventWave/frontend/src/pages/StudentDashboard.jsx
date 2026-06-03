@@ -66,7 +66,7 @@ function StudentDashboard() {
                     return (
                         <div key={event.eid} style={{ border: "1px solid black", margin: "10px", padding: "10px" }}>
                             <h3>{event.eventname}</h3>
-                            <p>Date: {event.date}</p>
+                            <p>Date: {new Date(event.date).toLocaleDateString()}</p>
                             <p>Venue: {event.venue}</p>
                             <p>Capacity: {event.capacity}</p>
                             <p>Registered: {event.registrationCount}</p>
