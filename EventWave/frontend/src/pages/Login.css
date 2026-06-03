@@ -8,7 +8,7 @@
     min-height: 100vh;
 
     background-image:
-        linear-gradient(rgba(91, 19, 163, 0.65),
+        linear-gradient(rgba(61, 116, 234, 0.65),
             rgba(185, 193, 229, 0.55)),
         url('/clouds.png');
 
@@ -79,6 +79,7 @@
 .login-welcome {
     font-size: 20px;
     opacity: 0.95;
+    font-weight: 800;
     line-height: 1.5;
     max-width: 300px;
 }

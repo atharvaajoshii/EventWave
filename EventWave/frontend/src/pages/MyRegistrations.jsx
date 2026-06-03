@@ -58,7 +58,7 @@ function MyRegistrations() {
                 <h3 className="registration-event-title">{event.eventname}</h3>
                 <div className="registration-event-details">
                   <div className="registration-event-detail">
-                    <strong>Date:</strong> {event.date}
+                    <strong>Date:</strong> {new Date(event.date).toLocaleDateString()}
                   </div>
                   <div className="registration-event-detail">
                     <strong>Venue:</strong> {event.venue}
