@@ -110,7 +110,28 @@ cd frontend
 npm install
 npm run dev
 ```
+## Database Setup
 
+Create database and import schema:
+
+```bash
+mariadb -u root -p < database.sql
+```
+
+or
+
+```bash
+mysql -u root -p < database.sql
+```
+
+This will create:
+
+- users
+- events
+- registrations
+
+and populate sample users and events.
+```
 ---
 
 ## Environment Variables
